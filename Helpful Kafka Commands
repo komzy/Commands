@@ -1,0 +1,52 @@
+Start zookeeper:
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+Start Kafka server:
+bin/kafka-server-start.sh config/server.properties
+
+add line to top of file
+sed -i '1s/^/Edge,Traffic,Time (t2),seqID,Time (t1),Delta_t,Status,ObjID,batchID\n/' broadcaststate_update_sync.txt
+sed -i '1s/^/Edge,Traffic,Time (t2),seqID,Time (t1),Delta_t,Average,Max\n/' broadcast
+
+sed -i '1s/^/Edge, Traffic, Timestamp,SeqID,TrajStatus,ObjID\n/' filename
+sed -i '1s/^/edge,traffic1,deltaT,traffic2,currentTime,trajStatus,seqID,objID\n/' filename
+
+
+Kafka Lists Topics:
+bin/kafka-topics.sh --bootstrap-server=localhost:9092 --list
+
+Create topic multiHotspots:
+bin/kafka-topics.sh --create --replication-factor 1 --partitions 60 --topic multiHotspots --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --replication-factor 1 --partitions 60 --topic SpatialDataGenOutput --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --replication-factor 1 --partitions 60 --topic BroadcastStateUpdate --bootstrap-server localhost:9092
+bin/kafka-topics.sh --create --replication-factor 1 --partitions 60 --topic Feedback --bootstrap-server localhost:9092
+
+
+Save output from Kafka topic to txt files:
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic SpatialDataGenOutput 2>&1 | tee broadcast_accuracy_sync.txt
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BroadcastStateUpdate 2>&1 | tee broadcaststate_update_sync.txt
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic Feedback 2>&1 | tee sideoutput_sync.txt
+
+Delete a Kafka topic:
+bin/kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic  SpatialDataGenOutput
+
+
+
+Start redis server:
+brew services start redis
+Stop:
+brew services stop redis
+Source: https://redis.io/docs/getting-started/installation/install-redis-on-mac-os/
+
+
+
+clear ram cache:
+sudo -i
+# sync; echo 3 > /proc/sys/vm/drop_caches 
+
+
+Print messages stored in a topic:
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic multiHotspots --from-beginning
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic SpatialDataGenOutput
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic BroadcastStateUpdate 
+bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic Feedback 
