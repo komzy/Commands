@@ -1,2 +1,31 @@
 ssh aaic-shk-[Tab] (from Ubuntu PC)
 http://localhost:29999/
+
+Error:
+used by: org.opengis.referencing.NoSuchAuthorityCodeException: No code "EPSG:4326" from authority "EPSG" found for object of type "EngineeringCRS".
+
+Solution:
+Trying using FLink 1.13 on cluster. No need to change flink version in POM file if version is lower.
+OR
+The order of dependencies listed in POM file matters! Make sure this is the order:
+ <dependency>
+        <groupId>org.geotools</groupId>
+        <artifactId>gt-epsg-wkt</artifactId>
+        <version>${geotools.version}</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.geotools</groupId>
+        <artifactId>gt-geometry</artifactId>
+        <version>${geotools.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.geotools</groupId>
+        <artifactId>gt-swing</artifactId>
+        <version>${geotools.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.geotools</groupId>
+        <artifactId>gt-shapefile</artifactId>
+        <version>${geotools.version}</version>
+    </dependency>
