@@ -8,6 +8,7 @@ Solution:
 Trying using FLink 1.13 on cluster. No need to change flink version in POM file if version is lower.
 OR
 The order of dependencies listed in POM file matters! Make sure this is the order:
+```
  <dependency>
         <groupId>org.geotools</groupId>
         <artifactId>gt-epsg-wkt</artifactId>
@@ -29,3 +30,8 @@ The order of dependencies listed in POM file matters! Make sure this is the orde
         <artifactId>gt-shapefile</artifactId>
         <version>${geotools.version}</version>
     </dependency>
+    ```
+    
+    Error:
+    if error cannnot find point on convext hull, or point on vertic, it means either geojson file is not being read, path is incorrect. 
+OR there is a problem with Pair data structure. 
