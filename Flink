@@ -35,3 +35,15 @@ The order of dependencies listed in POM file matters! Make sure this is the orde
     Error:
     if error cannnot find point on convext hull, or point on vertic, it means either geojson file is not being read, path is incorrect. 
 OR there is a problem with Pair data structure. 
+
+
+
+Error:
+Caused by: java.lang.IllegalArgumentException: Argument "ellipsoid" should not be null.
+    at org.geotools.referencing.GeodeticCalculator.<init>(GeodeticCalculator.java:195) ~[?:?]
+    at org.geotools.referencing.GeodeticCalculator.<init>(GeodeticCalculator.java:188) ~[?:?]
+    at DataGen.utils.SpatialFunctions.getAzimuthInDecimalDegrees(SpatialFunctions.java:55) 
+    
+ Solution: he crs was being set to null because Params.coordinateReferenceSystem is defined as a static variable. The scope of the static variables doesn't span (nor is it replicated) across all nodes in a distributed system.
+The result of which it works perfectly on the local IDE but fails on the cluster. Ensure you do not run static variables
+
