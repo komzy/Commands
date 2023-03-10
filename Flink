@@ -48,5 +48,7 @@ Caused by: java.lang.IllegalArgumentException: Argument "ellipsoid" should not b
 The result of which it works perfectly on the local IDE but fails on the cluster. Ensure you do not run static variables
 
 Error:
-Caused by: akka.pattern.AskTimeoutException: Ask timed out on [Actor[akka.tcp://flink@172.16.0.94:44863/user/rpc/taskmanager_0#-10023563]] after [10000 ms]. Message of type [org.apache.flink.runtime.rpc.messages.RemoteRpcInvocation]. A typical reason for `AskTimeoutException` is that the recipient actor didn't send a reply.
-set akka.ask.timeout:10min or larger in flink-conf.yaml
+Caused by: akka.pattern.AskTimeoutException: Ask timed out on [Actor[akka.tcp://flink@172.16.0.94:44863/user/rpc/taskmanager_0#-10023563]] after [10000 ms]. Message of type [org.apache.flink.runtime.rpc.messages.RemoteRpcInvocation]. 
+A typical reason for `AskTimeoutException` is that the recipient actor didn't send a reply.
+
+Solution: Set akka.ask.timeout:10min or larger in flink-conf.yaml
