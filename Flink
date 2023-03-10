@@ -47,3 +47,6 @@ Caused by: java.lang.IllegalArgumentException: Argument "ellipsoid" should not b
  Solution: he crs was being set to null because Params.coordinateReferenceSystem is defined as a static variable. The scope of the static variables doesn't span (nor is it replicated) across all nodes in a distributed system.
 The result of which it works perfectly on the local IDE but fails on the cluster. Ensure you do not run static variables
 
+Error:
+Caused by: akka.pattern.AskTimeoutException: Ask timed out on [Actor[akka.tcp://flink@172.16.0.94:44863/user/rpc/taskmanager_0#-10023563]] after [10000 ms]. Message of type [org.apache.flink.runtime.rpc.messages.RemoteRpcInvocation]. A typical reason for `AskTimeoutException` is that the recipient actor didn't send a reply.
+set akka.ask.timeout:10min or larger in flink-conf.yaml
