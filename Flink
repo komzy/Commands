@@ -52,3 +52,4 @@ Caused by: akka.pattern.AskTimeoutException: Ask timed out on [Actor[akka.tcp://
 A typical reason for `AskTimeoutException` is that the recipient actor didn't send a reply.
 
 Solution: Set akka.ask.timeout:10min or larger in flink-conf.yaml
+and akka.ask.timeout:600000 (10min)
