@@ -53,3 +53,10 @@ A typical reason for `AskTimeoutException` is that the recipient actor didn't se
 
 Solution: Set akka.ask.timeout:10min or larger in flink-conf.yaml
 and akka.ask.timeout:600000 (10min)
+
+
+Error:
+Jar was not working on Ubuntu but working on Mac.
+Reason: Flink cluster on Ubuntu was not picking up the right version of Java.
+Solution: Set the right Java home on flink cluster. Add the following line in the flink-conf.yaml
+env.java.home: /usr/lib/jvm/java-11-openjdk-amd64
