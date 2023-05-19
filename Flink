@@ -56,7 +56,7 @@ and akka.ask.timeout:600000 (10min)
 
 
 Error:
-Jar was not working on Ubuntu but working on Mac.
+Jar was not working on Ubuntu but working on Mac. This was happening with flink v.1.16.1
 Reason: Flink cluster on Ubuntu was not picking up the right version of Java.
 Solution: Set the right Java home on flink cluster. Add the following line in the flink-conf.yaml
 env.java.home: /usr/lib/jvm/java-11-openjdk-amd64
